@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROOT @ DEV_ENV</title>
+    <style>
+        :root {
+            --neon: #00ff41; /* Classic Matrix/Hacker Green */
+            --dark: #050505;
+            --border: #1a1a1a;
+        }
+
+        /* Aura +1000: Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 10px; }
+
+        body {
+            background-color: var(--dark);
+            color: var(--neon);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Initial Boot Sequence */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            padding: 60px 20px;
+            opacity: 0; 
+            transition: opacity 1s;
+        }
+
+        /* Aura +5000: The Dashboard Look */
+        .glass-panel {
+            border: 1px solid var(--border);
+            background: rgba(10, 10, 10, 0.8);
+            padding: 25px;
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .skill-row {
+            margin-bottom: 20px;
+        }
+
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .bar-bg {
+            height: 2px;
+            background: #1a1a1a;
+            width: 100%;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: var(--neon);
+            width: 0%;
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 8px var(--neon);
+        }
+
+        .glitch {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader"></div>
+
+    <div class="container" id="main-content">
+        <div class="glitch">ENVIRONMENT_STATS_V1.0</div>
+
+        <div class="glass-panel">
+            <div class="stat-grid">
+                <div>ORIGIN: <span style="color:white">INDIA/IST</span></div>
+                <div>REMOTE_OS: <span id="os-info" style="color:white">Detecting...</span></div>
+                <div>LOCAL_TIME: <span id="local-t" style="color:white">--:--</span></div>
+                <div>REMOTE_IP: <span id="ip-info" style="color:white">0.0.0.0</span></div>
+            </div>
+
+            <div class="skill-row" data-val="75">
+                <div class="skill-label"><span>Structure / HTML</span><span>75%</span></div>
+                <div class="bar-bg"><div class="bar-fill"></div></div>
+            </div>
+
+            <div class="skill-row" data-val="50">
+                <div class="skill-label"><span>System / C++</span><span>50%</span></div>
+                <div class="bar-bg"><div class="bar-fill"></div></div>
+            </div>
+
+            <div class="skill-row" data-val="81">
+                <div class="skill-label"><span>Logic / Python</span><span>81%</span></div>
+                <div class="bar-bg"><div class="bar-fill"></div></div>
+            </div>
+
+            <div class="skill-row" data-val="60">
+                <div class="skill-label"><span>Action / JS</span><span>60%</span></div>
+                <div class="bar-bg"><div class="bar-fill"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Boot Sequence Logic
+        const loader = document.getElementById('loader');
+        const lines = [
+            "> INITIALIZING BOOT_SEQUENCE...",
+            "> LOADING KERNEL ASSETS...",
+            "> ESTABLISHING REMOTE HANDSHAKE...",
+            "> SUCCESS: CONNECTION SECURE.",
+            "> INJECTING INTERFACE..."
+        ];
+
+        let lineIdx = 0;
+        function writeLine() {
+            if (lineIdx < lines.length) {
+                const p = document.createElement('div');
+                p.textContent = lines[lineIdx];
+                loader.appendChild(p);
+                lineIdx++;
+                setTimeout(writeLine, 400);
+            } else {
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    document.getElementById('main-content').style.opacity = '1';
+                    animateBars();
+                }, 500);
+            }
+        }
+        writeLine();
+
+        // 2. The "Magician" Info
+        function getIntel() {
+            // Get OS
+            document.getElementById('os-info').innerText = navigator.platform;
+            
+            // Get Time
+            setInterval(() => {
+                document.getElementById('local-t').innerText = new Date().toLocaleTimeString();
+            }, 1000);
+
+            // Get IP (Aura +9999)
+            fetch('https://api.ipify.org?format=json')
+                .then(res => res.json())
+                .then(data => document.getElementById('ip-info').innerText = data.ip)
+                .catch(() => document.getElementById('ip-info').innerText = "HIDDEN");
+        }
+
+        function animateBars() {
+            document.querySelectorAll('.skill-row').forEach(row => {
+                const val = row.getAttribute('data-val');
+                row.querySelector('.bar-fill').style.width = val + '%';
+            });
+        }
+
+        getIntel();
+    </script>
+</body>
+                                      </html>
+                                      
