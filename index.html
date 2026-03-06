@@ -3,198 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROOT @ DEV_ENV</title>
+    <title>Developer Portfolio | Systems</title>
     <style>
-        :root {
-            --neon: #00ff41; /* Classic Matrix/Hacker Green */
-            --dark: #050505;
-            --border: #1a1a1a;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap');
 
-        /* Aura +1000: Custom Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: var(--dark); }
-        ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 10px; }
+        :root {
+            --bg-base: #030303;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary: #6366f1; /* Indigo */
+            --secondary: #a855f7; /* Purple */
+            --accent: #ec4899; /* Pink */
+            --text-main: #f8fafc;
+            --text-muted: #8b949e;
+        }
 
         body {
-            background-color: var(--dark);
-            color: var(--neon);
-            font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            overflow-x: hidden;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
         }
 
-        /* Initial Boot Sequence */
-        #loader {
-            position: fixed;
-            inset: 0;
-            background: var(--dark);
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            font-size: 0.9rem;
+        /* The Premium Animated Background Glow */
+        .ambient-glow {
+            position: absolute;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.05) 50%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+            animation: pulse-glow 8s infinite alternate;
         }
 
-        .container {
+        @keyframes pulse-glow {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* High-End Glassmorphism Card */
+        .glass-card {
+            position: relative;
+            z-index: 10;
             width: 90%;
-            max-width: 700px;
-            padding: 60px 20px;
-            opacity: 0; 
-            transition: opacity 1s;
+            max-width: 550px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Aura +5000: The Dashboard Look */
-        .glass-panel {
-            border: 1px solid var(--border);
-            background: rgba(10, 10, 10, 0.8);
-            padding: 25px;
-            border-radius: 2px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
-            margin-bottom: 40px;
+        .glass-card.loaded {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            font-size: 0.8rem;
-            color: #888;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
-        }
-
-        .skill-row {
-            margin-bottom: 20px;
-        }
-
-        .skill-label {
+        /* The "Magician" Intel Header */
+        .header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .bar-bg {
-            height: 2px;
-            background: #1a1a1a;
-            width: 100%;
-        }
-
-        .bar-fill {
-            height: 100%;
-            background: var(--neon);
-            width: 0%;
-            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 8px var(--neon);
-        }
-
-        .glitch {
-            font-weight: bold;
-            font-size: 1.5rem;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
             margin-bottom: 30px;
-            text-align: center;
+        }
+
+        .title-block h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .title-block p {
+            margin: 5px 0 0;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        .intel-grid {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 15px 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        .intel-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .intel-label { color: var(--text-muted); margin-bottom: 4px; }
+        .intel-data { color: var(--accent); font-weight: 700; text-shadow: 0 0 10px rgba(236, 72, 153, 0.3); }
+
+        /* Sleek Skill Bars */
+        .skill { margin-bottom: 25px; }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .skill-track {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .skill-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .mono-percent {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
 
-    <div id="loader"></div>
+    <div class="ambient-glow"></div>
 
-    <div class="container" id="main-content">
-        <div class="glitch">ENVIRONMENT_STATS_V1.0</div>
-
-        <div class="glass-panel">
-            <div class="stat-grid">
-                <div>ORIGIN: <span style="color:white">INDIA/IST</span></div>
-                <div>REMOTE_OS: <span id="os-info" style="color:white">Detecting...</span></div>
-                <div>LOCAL_TIME: <span id="local-t" style="color:white">--:--</span></div>
-                <div>REMOTE_IP: <span id="ip-info" style="color:white">0.0.0.0</span></div>
+    <div class="glass-card" id="dashboard">
+        
+        <div class="header">
+            <div class="title-block">
+                <h1>System Capabilities</h1>
+                <p>LIVE TELEMETRY // ENGAGED</p>
             </div>
-
-            <div class="skill-row" data-val="75">
-                <div class="skill-label"><span>Structure / HTML</span><span>75%</span></div>
-                <div class="bar-bg"><div class="bar-fill"></div></div>
-            </div>
-
-            <div class="skill-row" data-val="50">
-                <div class="skill-label"><span>System / C++</span><span>50%</span></div>
-                <div class="bar-bg"><div class="bar-fill"></div></div>
-            </div>
-
-            <div class="skill-row" data-val="81">
-                <div class="skill-label"><span>Logic / Python</span><span>81%</span></div>
-                <div class="bar-bg"><div class="bar-fill"></div></div>
-            </div>
-
-            <div class="skill-row" data-val="60">
-                <div class="skill-label"><span>Action / JS</span><span>60%</span></div>
-                <div class="bar-bg"><div class="bar-fill"></div></div>
+            
+            <div class="intel-grid">
+                <div class="intel-item">
+                    <span class="intel-label">INDIA_TIME</span>
+                    <span class="intel-data" id="time-in">--:--:--</span>
+                </div>
+                <div class="intel-item">
+                    <span class="intel-label">YOUR_TIME</span>
+                    <span class="intel-data" id="time-local">--:--:--</span>
+                </div>
+                <div class="intel-item">
+                    <span class="intel-label">YOUR_SYS</span>
+                    <span class="intel-data" id="os-data" style="color: var(--primary);">Detecting...</span>
+                </div>
+                <div class="intel-item">
+                    <span class="intel-label">YOUR_IP</span>
+                    <span class="intel-data" id="ip-data" style="color: var(--secondary);">Routing...</span>
+                </div>
             </div>
         </div>
+
+        <div class="skill" data-target="75">
+            <div class="skill-header"><span>HTML Structure</span><span class="mono-percent">75%</span></div>
+            <div class="skill-track"><div class="skill-fill"></div></div>
+        </div>
+
+        <div class="skill" data-target="50">
+            <div class="skill-header"><span>C++ Architecture</span><span class="mono-percent">50%</span></div>
+            <div class="skill-track"><div class="skill-fill"></div></div>
+        </div>
+
+        <div class="skill" data-target="81">
+            <div class="skill-header"><span>Python Logic</span><span class="mono-percent">81%</span></div>
+            <div class="skill-track"><div class="skill-fill"></div></div>
+        </div>
+
+        <div class="skill" data-target="60">
+            <div class="skill-header"><span>JavaScript DOM</span><span class="mono-percent">60%</span></div>
+            <div class="skill-track"><div class="skill-fill"></div></div>
+        </div>
+
     </div>
 
     <script>
-        // 1. Boot Sequence Logic
-        const loader = document.getElementById('loader');
-        const lines = [
-            "> INITIALIZING BOOT_SEQUENCE...",
-            "> LOADING KERNEL ASSETS...",
-            "> ESTABLISHING REMOTE HANDSHAKE...",
-            "> SUCCESS: CONNECTION SECURE.",
-            "> INJECTING INTERFACE..."
-        ];
+        // 1. Initial Load Animation
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('dashboard').classList.add('loaded');
+                triggerBars();
+            }, 300); // Slight delay feels premium
+        });
 
-        let lineIdx = 0;
-        function writeLine() {
-            if (lineIdx < lines.length) {
-                const p = document.createElement('div');
-                p.textContent = lines[lineIdx];
-                loader.appendChild(p);
-                lineIdx++;
-                setTimeout(writeLine, 400);
-            } else {
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    document.getElementById('main-content').style.opacity = '1';
-                    animateBars();
-                }, 500);
-            }
+        // 2. Animate the Gradient Bars
+        function triggerBars() {
+            setTimeout(() => {
+                document.querySelectorAll('.skill').forEach(el => {
+                    const target = el.getAttribute('data-target');
+                    el.querySelector('.skill-fill').style.width = target + '%';
+                });
+            }, 500);
         }
-        writeLine();
 
-        // 2. The "Magician" Info
-        function getIntel() {
-            // Get OS
-            document.getElementById('os-info').innerText = navigator.platform;
+        // 3. The Magician Tracker Engine
+        function runTracker() {
+            // OS Detection
+            const platform = navigator.platform || navigator.userAgent;
+            let os = "Unknown OS";
+            if (platform.toLowerCase().includes("win")) os = "Windows";
+            else if (platform.toLowerCase().includes("mac")) os = "macOS";
+            else if (platform.toLowerCase().includes("linux")) os = "Linux";
+            else if (platform.toLowerCase().includes("iphone") || platform.toLowerCase().includes("ipad")) os = "iOS";
+            else if (platform.toLowerCase().includes("android")) os = "Android";
             
-            // Get Time
-            setInterval(() => {
-                document.getElementById('local-t').innerText = new Date().toLocaleTimeString();
-            }, 1000);
+            document.getElementById('os-data').innerText = os;
 
-            // Get IP (Aura +9999)
+            // IP Fetcher
             fetch('https://api.ipify.org?format=json')
                 .then(res => res.json())
-                .then(data => document.getElementById('ip-info').innerText = data.ip)
-                .catch(() => document.getElementById('ip-info').innerText = "HIDDEN");
+                .then(data => document.getElementById('ip-data').innerText = data.ip)
+                .catch(() => document.getElementById('ip-data').innerText = "ENCRYPTED");
+
+            // Live Clocks
+            setInterval(() => {
+                const now = new Date();
+                
+                // Their Local Time
+                document.getElementById('time-local').innerText = now.toLocaleTimeString('en-US', { hour12: false });
+                
+                // India Time
+                document.getElementById('time-in').innerText = now.toLocaleTimeString('en-US', { 
+                    timeZone: 'Asia/Kolkata', hour12: false 
+                });
+            }, 1000);
         }
 
-        function animateBars() {
-            document.querySelectorAll('.skill-row').forEach(row => {
-                const val = row.getAttribute('data-val');
-                row.querySelector('.bar-fill').style.width = val + '%';
-            });
-        }
-
-        getIntel();
+        runTracker();
     </script>
 </body>
-                                      </html>
-                                      
+                                                                         </html>
+                                                                         
